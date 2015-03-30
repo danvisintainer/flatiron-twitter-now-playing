@@ -1,3 +1,7 @@
-<h1>success!</h1>
+<h1><%= "#{@user.name}, here's what your friends are listening to!" %></h1>
 
-<% binding.pry %>
+<% @now_playing_list.each do |tweet| %>
+  <ul>
+    <li><%= tweet.text %></li>
+  </ul>
+<% end -%>

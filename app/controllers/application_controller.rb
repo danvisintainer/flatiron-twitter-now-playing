@@ -12,4 +12,36 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def get_tweets_using_client
+    array = nil;
+    max_id = nil;
+
+    5.times do
+      if max_id.nil?
+        array = client.home_timeline({count: 200})
+        max_id = array.last.id
+        puts "Max ID is now #{max_id}"
+      else
+        array << client.home_timeline({count:200, max_id: max_id})
+        array.flatten!
+        max_id = array.last.id
+        puts "Max ID is now #{max_id}"
+      end
+    end
+
+    array
+  end
+
+  def get_now_playing_tweets(array)
+    now_playing_list = array.select do |t| 
+      !!(t.text.downcase =~ /nowplaying|now playing|\#np|musicmonday/i)
+    end
+
+    now_playing_list
+  end
+
+  def get_tweets
+    get_now_playing_tweets(get_tweets_using_client)
+  end
+
 end
