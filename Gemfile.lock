@@ -56,6 +56,8 @@ GEM
     crass (1.0.1)
     debug_inspector (0.0.2)
     dotenv (2.0.0)
+    dotenv-rails (2.0.0)
+      dotenv (= 2.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.4.0)
@@ -201,7 +203,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
-  dotenv
+  dotenv-rails
   jbuilder (~> 2.0)
   jquery-rails
   omniauth

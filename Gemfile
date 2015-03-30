@@ -5,7 +5,7 @@ gem 'twitter-text'
 gem 'sanitize'
 gem 'omniauth'
 gem 'omniauth-twitter'
-gem 'dotenv'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
