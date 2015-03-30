@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  resources :sessions
+  # resources :sessions
 
+  root to: 'sessions#welcome'
+  get '/auth/twitter/callback', to: 'sessions#create', as: 'callback'
+  get '/auth/failure', to: 'sessions#error', as: 'failure'
+  get '/show', to: 'sessions#show', as: 'show'
+  get '/signout', to: 'sessions#destroy', as: 'signout'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
