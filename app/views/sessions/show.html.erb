@@ -2,6 +2,6 @@
 
 <% @now_playing_list.each do |tweet| %>
   <ul>
-    <li><%= tweet.text %></li>
+    <li><%= tweet.user.name %> played <b><%= tweet.text %></b></li>
   </ul>
 <% end -%>

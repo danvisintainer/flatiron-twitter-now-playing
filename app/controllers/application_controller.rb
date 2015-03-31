@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def match_with_spotify(query)
+    binding.pry
     RSpotify::Track.search(query).max_by {|t| t.popularity} 
   end
 
