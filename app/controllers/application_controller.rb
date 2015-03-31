@@ -13,12 +13,17 @@ class ApplicationController < ActionController::Base
   end
 
   def match_with_spotify(query)
-    binding.pry
     RSpotify::Track.search(query).max_by {|t| t.popularity} 
   end
 
-  def get_spotify_objects(tracks)
-    tracks.collect {|track| match_with_spotify(sanitize_track(track))}
+  def get_spotify_objects(tweets)
+    tweets.collect do |tweet|
+      {
+        song: match_with_spotify(sanitize_track(tweet.text)),
+        tweet_object: tweet,
+        tweet_user_object: tweet.user
+      }
+    end
   end
 
   def get_tweets_using_client

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
   def show
     if session['access_token'] && session['access_token_secret']
       @user = client.user(include_entities: true)
-      @now_playing_list = get_tweets
+      @now_playing_list = get_spotify_objects(get_tweets)
     else
       redirect_to failure_path
     end
