@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def match_with_spotify(query)
+    RSpotify::Track.search(query).max_by {|t| t.popularity} 
+  end
+
+  def get_spotify_objects(tracks)
+    tracks.collect {|track| match_with_spotify(sanitize_track(track))}
+  end
+
   def get_tweets_using_client
     array = nil;
     max_id = nil;
@@ -34,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   def get_now_playing_tweets(array)
     now_playing_list = array.select do |t| 
-      !!(t.text.downcase =~ /nowplaying|now playing|\#np|musicmonday/i)
+      !!(t.text.downcase =~ /nowplaying|now playing|\#np|musicmonday|music monday|tunestuesday|tunes tuesday/i)
     end
 
     now_playing_list
