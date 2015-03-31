@@ -53,6 +53,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_tweets_using_client
+    binding.pry
     array = nil;
     max_id = nil;
 
@@ -68,8 +69,6 @@ class ApplicationController < ActionController::Base
         puts "Max ID is now #{max_id}"
       end
     end
-
-    # factor this back in later
 
     # client.search("\#nowplaying", result_type: "recent").take(20)
 
