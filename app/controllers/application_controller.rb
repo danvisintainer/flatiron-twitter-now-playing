@@ -13,15 +13,41 @@ class ApplicationController < ActionController::Base
   end
 
   def match_with_spotify(query)
-    RSpotify::Track.search(query).max_by {|t| t.popularity} 
+    
+    # binding.pry
+    # query = /\w/.match(query)
+    puts "Searching Spotify for \"#{query}\""
+    match = RSpotify::Track.search(query).max_by {|t| t.popularity} 
+
+    puts "^ A Spotify match!" unless match.nil?
+    match
+  end
+
+  def sanitize_track(tweet)
+    tweet = tweet.split
+    tweet.delete_if do |t|
+      t[0] == "\#" || t[0] == "@" || t.include?("http") || t.include?('♬') ||
+      t.include?(':') || t.include?('♫') || t.include?('♩') || t == 'RT' ||
+      t == "&amp;" || t.downcase == "on"
+    end
+
+    tweet.join(' ')
   end
 
   def get_spotify_objects(tweets)
     tweets.collect do |tweet|
+      matched_song = match_with_spotify(sanitize_track(tweet.text))
+      if !matched_song.nil?
+        # binding.pry
+        song_text = "#{matched_song.name} by #{matched_song.artists[0].name}"
+      else
+        song_text = tweet.text
+      end
+
       {
-        song: match_with_spotify(sanitize_track(tweet.text)),
-        tweet_object: tweet,
-        tweet_user_object: tweet.user
+        song_text: song_text,
+        song_object: matched_song,
+        tweet_object: tweet
       }
     end
   end
@@ -43,12 +69,16 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # factor this back in later
+
+    # client.search("\#nowplaying", result_type: "recent").take(20)
+
     array
   end
 
   def get_now_playing_tweets(array)
     now_playing_list = array.select do |t| 
-      !!(t.text.downcase =~ /nowplaying|now playing|\#np|musicmonday|music monday|tunestuesday|tunes tuesday/i)
+      !!(t.text.downcase =~ /nowplaying|now playing|\#np\b/i)
     end
 
     now_playing_list
