@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
         max_id = array.last.id
         puts "Max ID is now #{max_id}"
       end
+
     end
 
     array
@@ -53,4 +54,9 @@ class ApplicationController < ActionController::Base
     get_now_playing_tweets(get_tweets_using_client)
   end
 
+end
+
+def sanitize_track(tweet)
+string = tweet
+binding.pry
 end
