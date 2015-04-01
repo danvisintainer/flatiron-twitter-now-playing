@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  RSpotify::authenticate(ENV["SPOTIFY_KEY"], ENV["SPOTIFY_SECRET"])
+
   def client
     @client ||= Twitter::REST::Client.new do |config|
       config.consumer_key = ENV["TWITTER_KEY"]
