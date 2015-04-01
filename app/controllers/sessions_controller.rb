@@ -25,4 +25,8 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: 'Signed out'
   end
 
+  def playlist
+
+  end
+
 end
