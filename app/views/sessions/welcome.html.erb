@@ -1,6 +1,16 @@
-<center><h1 class="bigh1">simplist</h1><br>
+  <div id="container">
+    <div id="content">
+        <center><h1 class="bigh1">simplist</h1><br>
+        <div>
+          <%= form_tag("/auth/twitter", :method => :get) do %>
+            <%= submit_tag "Sign in with Twitter", :class => "btn btn-success" %>
+          <% end %>
+        </div>
+        </center>
+      
+    </div>
+  </div>
+<!-- <img src="http://31.media.tumblr.com/ffad795ecaec4a6348d0d839362222e9/tumblr_nm1m2rWGhV1tcuj64o1_400.gif" alt title> -->
 
-<%= form_tag("/auth/twitter", :method => :get) do %>
-  <%= submit_tag("Sign in with Twitter") %>
-<% end -%>
-</center>
+
+

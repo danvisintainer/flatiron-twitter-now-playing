@@ -101,27 +101,28 @@ class ApplicationController < ActionController::Base
 
   def get_tweets_using_client
     # binding.pry
-    array = nil;
-    max_id = nil;
+    # array = nil;
+    # max_id = nil;
 
-    puts "Getting tweets..."
-    5.times do
-      if max_id.nil?
-        array = client.home_timeline({count: 200})
-        max_id = array.last.id
-        puts "Max ID is now #{max_id}"
-      else
-        array << client.home_timeline({count:200, max_id: max_id})
-        array.flatten!
-        max_id = array.last.id
-        puts "Max ID is now #{max_id}"
-      end
-    end
-    puts "Done."
+    # puts "Getting tweets..."
+    # 5.times do
+    #   if max_id.nil?
+    #     array = client.home_timeline({count: 200})
+    #     max_id = array.last.id
+    #     puts "Max ID is now #{max_id}"
+    #   else
+    #     array << client.home_timeline({count:200, max_id: max_id})
+    #     array.flatten!
+    #     max_id = array.last.id
+    #     puts "Max ID is now #{max_id}"
+    #   end
 
-    # client.search("\#nowplaying", result_type: "recent").take(20)
+    # end
+    # puts "Done."
 
-    array
+    client.search("\#nowplaying", result_type: "recent").take(20)
+
+    #array
   end
 
   def get_now_playing_tweets(array)
@@ -136,4 +137,9 @@ class ApplicationController < ActionController::Base
     get_now_playing_tweets(get_tweets_using_client)
   end
 
+end
+
+def sanitize_track(tweet)
+string = tweet
+binding.pry
 end
