@@ -29,13 +29,9 @@ class SessionsController < ApplicationController
   def playlist
     spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
     new_playlist = spotify_user.create_playlist!('Simplist')
-    
     spotify_songs = session['playlist'].collect {|s| RSpotify::Track.find(s)}
-    binding.pry
-
     new_playlist.add_tracks!(spotify_songs)
-
-    binding.pry
+    redirect_to new_playlist.external_urls["spotify"]
   end
 
 end
