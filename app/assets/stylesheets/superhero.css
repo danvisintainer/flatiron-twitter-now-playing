@@ -8,6 +8,10 @@
 */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
+.bigh1 {
+  font-size: 10em;
+}
+
 .centerText{
   text-align: center;
 }

@@ -53,10 +53,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_tweets_using_client
-    binding.pry
+    # binding.pry
     array = nil;
     max_id = nil;
 
+    puts "Getting tweets..."
     5.times do
       if max_id.nil?
         array = client.home_timeline({count: 200})
@@ -69,6 +70,7 @@ class ApplicationController < ActionController::Base
         puts "Max ID is now #{max_id}"
       end
     end
+    puts "Done."
 
     # client.search("\#nowplaying", result_type: "recent").take(20)
 
