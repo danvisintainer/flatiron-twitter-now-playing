@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     if session['access_token'] && session['access_token_secret']
       @user = client.user(include_entities: true)
       @now_playing_list = get_spotify_objects(get_tweets)
+      session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
     else
       redirect_to failure_path
     end
@@ -26,7 +27,15 @@ class SessionsController < ApplicationController
   end
 
   def playlist
+    spotify_user = RSpotify::User.new(request.env['omniauth.auth'])
+    new_playlist = spotify_user.create_playlist!('Simplist')
+    
+    spotify_songs = session['playlist'].collect {|s| RSpotify::Track.find(s)}
+    binding.pry
 
+    new_playlist.add_tracks!(spotify_songs)
+
+    binding.pry
   end
 
 end
