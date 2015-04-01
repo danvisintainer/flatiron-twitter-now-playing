@@ -12,14 +12,55 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def minimize_query(query)
+    if !!/".*"/.match(query) # first, see if the song has quotes, and then try to match that
+      # binding.pry
+      puts "    Searching with quotes for #{/".*"/.match(query).to_s.gsub("\"", "")}"
+      result = RSpotify::Track.search(/".*"/.match(query).to_s.gsub("\"", "")).max_by {|t| t.popularity}
+      puts "     ^ Matched within quotes." if !result.nil?
+      if result.nil?
+        # binding.pry
+        result = RSpotify::Track.search(query.gsub("\"", "").gsub(/tune\b|song\b|track\b|music\b|by\b|de\b|di\b/i, "")).max_by {|t| t.popularity} 
+      end
+
+      return result if !result.nil?
+    end
+
+    if !!/ft\b-/.match(query) # now, if the query has "ft. etc" in it (this seems to throw off spotify results)
+      # binding.pry
+      query.gsub!(/ft\b-/i, " ")
+    end
+
+    if !!/feat\b-/.match(query) # now, if the query has "ft. etc" in it (this seems to throw off spotify results)
+      # binding.pry
+      query.gsub!(/feat\b-/i, " ")
+    end
+
+    query = query.split
+    center = query.index("-") || query.index("by") || query.index("/")
+
+    return nil if center.nil?
+    return nil if query[center-3..center+3].nil?
+
+    q = query[center-3..center+3].join(" ").gsub("-", " ").gsub("by", " ")
+
+    if q.empty?
+      return nil
+    else
+      puts "    Searching (with minimization) for #{q}"
+      match = RSpotify::Track.search(q.gsub(/tune\b|song\b|track\b|music\b|by\b|de\b|di\b/i, "")).max_by {|t| t.popularity}
+      puts "     ^ Matched with minimized string." unless match.nil?
+      return match
+    end
+  end
+
   def match_with_spotify(query)
-    
-    # binding.pry
-    # query = /\w/.match(query)
-    puts "Searching Spotify for \"#{query}\""
+    puts "  Searching Spotify for \"#{query}\""
     match = RSpotify::Track.search(query).max_by {|t| t.popularity} 
 
-    puts "^ A Spotify match!" unless match.nil?
+    match = minimize_query(query) if match.nil?
+    puts "     ^ A Spotify match!" unless match.nil?
+    puts "    No match." if match.nil?
     match
   end
 
@@ -31,12 +72,16 @@ class ApplicationController < ActionController::Base
       t == "&amp;" || t.downcase == "on"
     end
 
+    puts " Sanitized to #{tweet.join(' ')}"
     tweet.join(' ')
   end
 
   def get_spotify_objects(tweets)
     tweets.collect do |tweet|
-      matched_song = match_with_spotify(sanitize_track(tweet.text))
+      puts "Sanitizing tweet: #{tweet.text}"
+      sanitized = sanitize_track(tweet.text)
+      next if sanitized.empty?
+      matched_song = match_with_spotify(sanitized)
       if !matched_song.nil?
         # binding.pry
         song_text = "#{matched_song.name} by #{matched_song.artists[0].name}"

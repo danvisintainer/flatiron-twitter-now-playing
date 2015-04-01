@@ -14,7 +14,7 @@
       <tr>
         <td style="vertical-align:middle">
           <% if !tweet[:song_object].nil? %>
-            <img src = "<%= tweet[:song_object].album.images[2]["url"] %>">
+            <img src = "<%= tweet[:song_object].album.images.last["url"] %>">
           <% else %>
             <%= image_tag("music_icon.png", size: "64x64") %>  
           <% end -%>
