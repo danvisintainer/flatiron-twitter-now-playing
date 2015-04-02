@@ -20,6 +20,13 @@
     </thead>
     <% @now_playing_list.each do |tweet| %>
       <tr>
+        <% if !tweet[:song_object].nil? %>
+          <td style="vertical-align:middle">
+            <%= check_box_tag tweet[:song_object].id, 'yes', true, class: 'spotify_checkbox' %>
+          </td>
+        <% else %>
+          <td style="vertical-align:middle"></td>
+        <% end -%>
         <td style="vertical-align:middle">
           <% if !tweet[:song_object].nil? %>
             <img src = "<%= tweet[:song_object].album.images.last["url"] %>">
