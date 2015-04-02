@@ -10,8 +10,13 @@ class SessionsController < ApplicationController
     if params[:mode] == 'friends'
       if session['access_token'] && session['access_token_secret']
         @user = client.user(include_entities: true)
-        @now_playing_list = get_spotify_objects(get_tweets)
-        session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
+        tweets = get_tweets
+        if tweets.nil?
+          redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes, or check out the worldwide list!" }
+        else
+          @now_playing_list = get_spotify_objects(tweets)
+          session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
+        end
       else
         redirect_to failure_path
       end

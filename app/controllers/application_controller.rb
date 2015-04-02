@@ -105,20 +105,23 @@ class ApplicationController < ActionController::Base
 
     puts "Getting tweets..."
     5.times do
-      if max_id.nil?
-        array = client.home_timeline({count: 200})
-        max_id = array.last.id
-        puts "Max ID is now #{max_id}"
-      else
-        array << client.home_timeline({count:200, max_id: max_id})
-        array.flatten!
-        max_id = array.last.id
-        puts "Max ID is now #{max_id}"
+      begin
+        if max_id.nil?
+          array = client.home_timeline({count: 200})
+          max_id = array.last.id
+          puts "Max ID is now #{max_id}"
+        else
+          array << client.home_timeline({count:200, max_id: max_id})
+          array.flatten!
+          max_id = array.last.id
+          puts "Max ID is now #{max_id}"
+        end
+      rescue Twitter::Error::TooManyRequests => error
+        return
       end
-
     end
-    puts "Done."
 
+    puts "Done."
     array
   end
 
@@ -131,7 +134,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_tweets
-    get_now_playing_tweets(get_friend_tweets_using_client)
+    tweets = get_friend_tweets_using_client
+    get_now_playing_tweets(tweets) unless tweets.nil?
   end
 
   def get_public_tweets

@@ -1,3 +1,4 @@
+
   <div id="container">
     <div id="content">
       <center><h1 class="bigh1">simplist</h1><br>
@@ -5,7 +6,17 @@
         <%= form_tag("/auth/twitter", :method => :get) do %>
           <%= submit_tag "Get your friends' tracks by signing in with Twitter", :class => "btn btn-success" %>
         <% end %>
+        </div>
 
+        <% if !flash[:error].nil? %>
+        <br>
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <%= flash[:error] %>
+        </div>
+        <% end -%>
+
+        <div>
         <br>
         <%= form_tag("/show/public", :method => :get) do %>
           <%= submit_tag "Get the whole world's tracks!", :class => "btn btn-success" %>
