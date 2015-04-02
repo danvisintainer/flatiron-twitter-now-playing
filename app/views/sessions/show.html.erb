@@ -1,6 +1,11 @@
 <div class="bigh1-small">
-  <center><h1><%= "#{@user.name}, "%></h1>
-  <h2>here's what your friends are listening to!</h2> 
+  <% if params[:mode] == 'friends'  %>
+    <center><h1><%= "#{@user.name}, "%></h1>
+    <h2>here's what your friends are listening to!</h2>
+  <% elsif params[:mode] == 'public'  %>
+    <center><h2>Here's what the world is listening to!</h2>
+  <% end -%>
+
 </div>
 <br>
 
