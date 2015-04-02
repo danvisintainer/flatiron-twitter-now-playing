@@ -9,12 +9,9 @@ $(function() {
     if(this.checked) {
       $(this).parents("tr").addClass("warning");
       $(this).parents("tr").children(".song_text").children().children("a").addClass("highlighted");
-
     } else if (this.checked === false) {
       $(this).parents("tr").removeClass("warning");
       $(this).parents("tr").children(".song_text").children().children("a").removeClass("highlighted");
-      console.log("Unchecked");
-
     }
   });
 
@@ -22,17 +19,14 @@ $(function() {
     if(this.checked) { // check select status
       $('.spotify_checkbox').each(function() { //loop through each checkbox
         this.checked = true;  //select all checkboxes with class "checkbox1"
-
         $(this).parents("tr").addClass("warning");  
-        $(this).parents("tr").children(".song_text").children().children("a").addClass("highlighted");
-        console.log("Checked");             
+        $(this).parents("tr").children(".song_text").children().children("a").addClass("highlighted");           
       });
     }else{
       $('.spotify_checkbox').each(function() { //loop through each checkbox
         this.checked = false; //deselect all checkboxes with class "checkbox1"
         $(this).parents("tr").removeClass("warning");
-        $(this).parents("tr").children(".song_text").children().children("a").removeClass("highlighted");
-      console.log("Unchecked");                       
+        $(this).parents("tr").children(".song_text").children().children("a").removeClass("highlighted");                  
       });         
     }
   });
