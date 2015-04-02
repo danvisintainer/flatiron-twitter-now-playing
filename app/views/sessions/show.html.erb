@@ -25,7 +25,7 @@
     <%= form_tag("/to_spotify", :method => :post) do %>
     <% @now_playing_list.each do |tweet| %>
 
-      <tr>
+      <tr class="table-row">
 
         <% if !tweet[:song_object].nil? %>
           <td style="vertical-align:middle">
