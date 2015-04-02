@@ -9,6 +9,11 @@
 */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
+
+a.highlighted {
+  color: #FFF;
+}
+
 .bigh1 {
   font-size: 10em;
   /*text-shadow: 3px 3px 4px #000, 
