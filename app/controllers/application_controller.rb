@@ -45,12 +45,13 @@ class ApplicationController < ActionController::Base
     return nil if query[center-3..center+3].nil?
 
     q = query[center-3..center+3].join(" ").gsub("-", " ").gsub("by", " ")
+    q.gsub!(/tune\b|song\b|track\b|music\b|by\b|de\b|di\b/i, "")
 
     if q.empty?
       return nil
     else
       puts "    Searching (with minimization) for #{q}"
-      match = RSpotify::Track.search(q.gsub(/tune\b|song\b|track\b|music\b|by\b|de\b|di\b/i, "")).max_by {|t| t.popularity}
+      match = RSpotify::Track.search(q).max_by {|t| t.popularity}
       puts "     ^ Matched with minimized string." unless match.nil?
       return match
     end
