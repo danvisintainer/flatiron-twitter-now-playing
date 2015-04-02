@@ -99,30 +99,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_tweets_using_client
-    # binding.pry
-    # array = nil;
-    # max_id = nil;
+  def get_friend_tweets_using_client
+    array = nil;
+    max_id = nil;
 
-    # puts "Getting tweets..."
-    # 5.times do
-    #   if max_id.nil?
-    #     array = client.home_timeline({count: 200})
-    #     max_id = array.last.id
-    #     puts "Max ID is now #{max_id}"
-    #   else
-    #     array << client.home_timeline({count:200, max_id: max_id})
-    #     array.flatten!
-    #     max_id = array.last.id
-    #     puts "Max ID is now #{max_id}"
-    #   end
+    puts "Getting tweets..."
+    5.times do
+      if max_id.nil?
+        array = client.home_timeline({count: 200})
+        max_id = array.last.id
+        puts "Max ID is now #{max_id}"
+      else
+        array << client.home_timeline({count:200, max_id: max_id})
+        array.flatten!
+        max_id = array.last.id
+        puts "Max ID is now #{max_id}"
+      end
 
-    # end
-    # puts "Done."
+    end
+    puts "Done."
 
-    client.search("\#nowplaying", result_type: "recent").take(20)
-
-    # array
+    array
   end
 
   def get_now_playing_tweets(array)
@@ -134,7 +131,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_tweets
-    get_now_playing_tweets(get_tweets_using_client)
+    get_now_playing_tweets(get_friend_tweets_using_client)
+  end
+
+  def get_public_tweets
+    client.search("\#nowplaying", result_type: "recent").take(20)
   end
 
 end

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/auth/twitter/callback', to: 'sessions#create', as: 'callback'
   get '/auth/spotify/callback', to: 'sessions#playlist'
   get '/auth/failure', to: 'sessions#error', as: 'failure'
-  get '/show', to: 'sessions#show', as: 'show'
+  get '/show/:mode', to: 'sessions#show', as: 'show'
   get '/signout', to: 'sessions#destroy', as: 'signout'
   
   # The priority is based upon order of creation: first created -> highest priority.

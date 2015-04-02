@@ -3,7 +3,12 @@
         <center><h1 class="bigh1">simplist</h1><br>
         <div>
           <%= form_tag("/auth/twitter", :method => :get) do %>
-            <%= submit_tag "Sign in with Twitter", :class => "btn btn-success" %>
+            <%= submit_tag "Get your friends' tracks by signing in with Twitter", :class => "btn btn-success" %>
+          <% end %>
+
+          <br>
+          <%= form_tag("/show/public", :method => :get) do %>
+            <%= submit_tag "Get the whole world's tracks!", :class => "btn btn-success" %>
           <% end %>
         </div>
         </center>
