@@ -28,7 +28,7 @@
     <% @now_playing_list.each do |tweet| %>
 
       <tr class="table-row">
-
+        <% next if tweet.nil?  %>
         <% if !tweet[:song_object].nil? %>
           <td style="vertical-align:middle">
             <%= check_box_tag tweet[:song_object].id, 'yes', false, class: 'spotify_checkbox' %>
