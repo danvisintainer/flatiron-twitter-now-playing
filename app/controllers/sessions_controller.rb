@@ -15,7 +15,6 @@ class SessionsController < ApplicationController
           redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes!" }
         else
           @now_playing_list = get_spotify_objects(tweets)
-          session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
         end
       else
         redirect_to failure_path
@@ -26,7 +25,6 @@ class SessionsController < ApplicationController
         redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes!" }
       else
         @now_playing_list = get_spotify_objects(tweets)
-        session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
       end
     else
       redirect_to root_path
@@ -50,6 +48,11 @@ class SessionsController < ApplicationController
     spotify_songs = session['playlist'].collect {|s| RSpotify::Track.find(s)}
     new_playlist.add_tracks!(spotify_songs)
     redirect_to new_playlist.external_urls["spotify"]
+  end
+
+  def save_checks
+    session['playlist'] = params.collect {|k, v| k if v == "yes"}.compact
+    redirect_to '/auth/spotify'
   end
 
 end

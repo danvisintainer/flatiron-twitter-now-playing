@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#error', as: 'failure'
   get '/show/:mode', to: 'sessions#show', as: 'show'
   get '/signout', to: 'sessions#destroy', as: 'signout'
+
+  post '/to_spotify', to: 'sessions#save_checks'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
