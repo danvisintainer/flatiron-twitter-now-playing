@@ -1,6 +1,7 @@
 
   <div id="container">
     <div id="content">
+
       <center><h1 class="bigh1">simplist</h1><br>
       <div>
         <%= form_tag("/auth/twitter", :method => :get) do %>
@@ -22,8 +23,42 @@
           <%= submit_tag "Get the whole world's tracks!", :class => "btn btn-success btn-lg" %>
         <% end %>
       </div>
+
       </center>
+
+      <div><center><p><br><a class="btn btn-default btn-sm" id="show_modal">About</a></p></center></div>
       
+      
+      
+    </div>
+  </div>
+
+  <div class="modal fade" id="about_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">About</h4>
+        </div>
+        <div class="modal-body">
+          <p>Simplist is a little app that will scan Twitter (either the public 
+          timeline or yours) for any instances of "Now Playing," try and figure
+          out the song in the tweet, and then try to match that song on
+           Spotify. It can also make you a Spotify playlist of the songs you
+           found!</p>
+         <p>
+           Simplist was created at The Flatiron School by <%= link_to "Matthew Stines", "https://github.com/mstines007" %>,
+           <%= link_to "Maureen Johnston", ""%> and
+           <%= link_to "Dan Visintainer", "http://www.danvisintainer.com" %>.
+         </p>
+         <p>
+           <%= link_to "Source", "https://github.com/danvisintainer/flatiron-twitter-now-playing" %>
+         </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 <!-- <img src="http://31.media.tumblr.com/ffad795ecaec4a6348d0d839362222e9/tumblr_nm1m2rWGhV1tcuj64o1_400.gif" alt title> -->
