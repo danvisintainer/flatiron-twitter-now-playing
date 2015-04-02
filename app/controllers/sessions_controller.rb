@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
         @user = client.user(include_entities: true)
         tweets = get_tweets
         if tweets.nil?
-          redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes, or check out the worldwide list!" }
+          redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes!" }
         else
           @now_playing_list = get_spotify_objects(tweets)
           session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
@@ -21,8 +21,13 @@ class SessionsController < ApplicationController
         redirect_to failure_path
       end
     elsif params[:mode] == 'public'
-      @now_playing_list = get_spotify_objects(get_public_tweets)
-      session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
+      tweets = get_public_tweets
+      if tweets.nil?
+        redirect_to root_path, :flash => { :error => "Sorry, an error has occurred (most likely Twitter's rate limit). Try again in a few minutes!" }
+      else
+        @now_playing_list = get_spotify_objects(tweets)
+        session['playlist'] = @now_playing_list.collect {|s| s[:song_object].id unless s[:song_object].nil?}.compact
+      end
     else
       redirect_to root_path
     end
