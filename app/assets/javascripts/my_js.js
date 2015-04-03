@@ -5,23 +5,20 @@ $(function() {
     });
   });
 
-  // $(".spotify_checkbox").change(function() {
-  //   if(this.checked) {
-  //     $(this).parents("tr").addClass("warning");
-  //     $(this).parents("tr").children(".song_text").children().children("a").addClass("highlighted");
-  //   } else if (this.checked === false) {
-  //     $(this).parents("tr").removeClass("warning");
-  //     $(this).parents("tr").children(".song_text").children().children("a").removeClass("highlighted");
-  //   }
-  // });
-
-  $(".spotify_checkbox").click(function(){
-      $(this).parents("tr").toggleClass('warning');
-      $(this).parents("tr").children(".song_text").children().children("a").toggleClass("highlighted");
+  $(".spotify_checkbox").change(function() {
+    if(this.checked) {
+      $(this).parents("tr").addClass("warning");
+      $(this).parents("tr").children(".song_text").children().children("a").addClass("highlighted");
+    } else if (this.checked === false) {
+      $(this).parents("tr").removeClass("warning");
+      $(this).parents("tr").children(".song_text").children().children("a").removeClass("highlighted");
+    }
   });
 
-
-  
+  // $(".spotify_checkbox").click(function(){
+  //     $(this).parents("tr").toggleClass('warning');
+  //     $(this).parents("tr").children(".song_text").children().children("a").toggleClass("highlighted");
+  // });
 
   $('#select_all').click(function(event) {  //on click 
     if(this.checked) { // check select status
