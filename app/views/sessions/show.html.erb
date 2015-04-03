@@ -1,69 +1,18 @@
 <div class="bigh1-small">
   <% if params[:mode] == 'friends'  %>
     <center><h1><%= "#{@user.name}, "%></h1>
-    <h2>here's what your friends are listening to!</h2>
+    <% if @tweets.nil? || @tweets.empty? %>
+      <h2>it's pretty quiet in here!</h2>
+      <p><h4>Unfortunately, none of your friends have shared any tracks recently.<br>
+      Why don't you check out the public page to see the rest of the world's jams?</h4></p>
+      <%= form_tag("/show/public", :method => :get) do %>
+        <%= submit_tag "Take me to the public page!", :class => "btn btn-success btn-lg" %>
+      <% end -%>
+    <% else %>
+      <h2>here's what your friends are listening to!</h2>
+      <%= render 'songtable' %>
+    <% end %>
   <% elsif params[:mode] == 'public'  %>
     <center><h2>Here's what the world is listening to!</h2>
+    <%= render 'songtable' %>
   <% end -%>
-
-</div>
-<br>
-
-<center><p class="lead">
-  Check off the songs you'd like to add to a Spotify playlist.
-</p>
-<div id="table_container">
-  <table class="table table-striped table-hover " id="song-table">
-    <thead>
-      <tr>
-        <th>
-          <%= check_box_tag 'select_all' %>
-        </th>
-        <th></th>
-        <th>Song</th>
-        <th>Listened to by</th>
-      </tr>
-    </thead>
-    <%= form_tag("/to_spotify", :method => :post) do %>
-    <% @now_playing_list.each do |tweet| %>
-
-      <tr class="table-row">
-        <% next if tweet.nil? %>
-        <% if !tweet[:song_object].nil? %>
-          <td style="vertical-align:middle">
-            <%= check_box_tag tweet[:song_object].id, 'yes', false, class: 'spotify_checkbox' %>
-          </td>
-        <% else %>
-          <td style="vertical-align:middle">
-          </td>
-        <% end -%>
-
-        <td style="vertical-align:middle">
-          <% if !tweet[:song_object].nil? %>
-            <img src = "<%= tweet[:song_object].album.images.last["url"] %>">
-          <% else %>
-            <%= image_tag("music_icon.png", size: "64x64") %>  
-          <% end -%>
-        </td>
-
-        <td class="song_text" style="vertical-align:middle"><b>
-          
-          <% if !tweet[:song_object].nil? %>
-            <a href = "<%= tweet[:song_object].uri %>"><%= tweet[:song_text] %></a>
-          <% else %>
-            <%= tweet[:song_text] %>
-          <% end -%>
-          
-          </b></td>
-        <td style="vertical-align:middle"><%= tweet[:tweet_object].user.name %></td>
-      </tr>
-    <% end -%>
-  </table>
-</div>
-
-<div><center>
-  
-    <%= submit_tag "Create a Spotify playlist with these tracks!", :class => "btn btn-success btn-lg" %>
-  <% end %>
-  <br><br>
-</div>
