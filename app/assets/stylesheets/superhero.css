@@ -14,6 +14,11 @@ a.highlighted {
   transition: background .1s linear;
 }
 
+a.highlighted:hover {
+  color: #FFF;
+
+}
+
 .bigh1 {
   font-size: 10em;
   /*text-shadow: 3px 3px 4px #000, 
@@ -1128,7 +1133,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: #f39c11;
+  color: #FFF;
   text-decoration: underline;
 }
 a:focus {
