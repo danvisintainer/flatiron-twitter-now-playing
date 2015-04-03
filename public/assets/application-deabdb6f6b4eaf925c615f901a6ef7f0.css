@@ -1110,7 +1110,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #ffffff;
-  background-image: url('bg.jpg');
+  background-image: url("http://s3.amazonaws.com/share.danvisintainer.com/bg.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
