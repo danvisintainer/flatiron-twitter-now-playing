@@ -9,6 +9,11 @@
 */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
+
+a.highlighted {
+  color: #FFF;
+}
+
 .bigh1 {
   font-size: 10em;
   /*text-shadow: 3px 3px 4px #000, 
@@ -1105,7 +1110,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #ffffff;
-  background-image: url('bg.jpg');
+  background-image: "http://s3.amazonaws.com/share.danvisintainer.com/bg.jpg";
   background-repeat: no-repeat;
   background-attachment: fixed;
 }

@@ -1110,7 +1110,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: #ffffff;
-  background-image: url("http://s3.amazonaws.com/share.danvisintainer.com/bg.jpg");
+  background-image: url("http://s3.amazonaws.com/share.danvisintainer.com/bg.jpg)";
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -6872,4 +6872,38 @@ a.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   background-color: #464545;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+#container{
+   position: absolute;
+   top: 50%;
+   margin-top: -200px;/* half of #content height*/
+   left: 0;
+   width: 100%;
+   vertical-align: center;
+}
+#content {
+   width: 624px;
+   margin-left: auto;
+   margin-right: auto;
+   height: 395px;
+}
+
+.bigh1-small {
+  font-size: 10em;
 }
